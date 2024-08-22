@@ -1,0 +1,23 @@
+#!/bin/sh
+
+sleep 3
+
+case "$1" in
+start)
+        rmmod -f mbt8xxx
+	rmmod -f usb8xxx
+	rmmod -f mlan
+	sleep 2
+        insmod  /lib/modules/5.10.198/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlan.ko
+        sleep 1
+        insmod  /lib/modules/5.10.198/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/usb8xxx.ko drv_mode=1  cfg80211_drcs=0 auto_ds=2 ps_mode=2 cfg80211_wext=0xf
+        sleep 2
+        ifconfig mlan0 up
+        sleep 2
+        hciconfig hci0 up &
+        /etc/init.d/bluetooth restart
+	;;
+stop)
+        ;;
+esac
+exit 0

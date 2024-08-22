@@ -1,0 +1,25 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:net
+# Required-Start: $network $remote_fs $local_fs
+# Required-Stop: $network $remote_fs $local_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: none
+# Description:none
+### END INIT INFO
+
+case "$1" in
+start)
+	#start-stop-daemon --start -S -q -b --exec
+	sudo nohup sh /etc/gprs_call.sh&
+	;;
+stop)
+	#start-stop-daemon --stop
+	rm -r /root/net.txt
+	ifconfig ppp0 down
+	;;
+esac
+echo "hello today !" >> /etc/net.txt
+exit 0
