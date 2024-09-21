@@ -1,17 +1,3 @@
-From df88197e68ba19301392491ce2c459f5362ca83d Mon Sep 17 00:00:00 2001
-From: "fu.qiang" <fu.qiang@geniatech.com>
-Date: Mon, 5 Aug 2024 12:09:27 +0800
-Subject: [PATCH] kernel dts patch
-
----
- .../boot/dts/rockchip/rk3568-android.dtsi     |   2 +-
- arch/arm64/boot/dts/rockchip/rk3568-evb.dtsi  | 220 +++++++++++++-----
- .../dts/rockchip/rk3568-evb1-ddr4-v10.dtsi    | 128 ++++++----
- .../arm64/boot/dts/rockchip/rk3568-linux.dtsi |   2 +-
- arch/arm64/boot/dts/rockchip/rk3568.dtsi      |   8 +-
- arch/arm64/configs/rockchip_linux_defconfig   |  68 ++++++
- 6 files changed, 326 insertions(+), 102 deletions(-)
-
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-android.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-android.dtsi
 index 87c4ba3f6..b71785476 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-android.dtsi
@@ -507,7 +493,7 @@ index f13c2387f..a9d89b2ea 100644
  
  &vop_mmu {
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
-index dc9ad4236..837dff63f 100644
+index dc9ad4236..be065fbe0 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
 @@ -61,7 +61,7 @@
@@ -573,6 +559,24 @@ index dc9ad4236..837dff63f 100644
  				reg = <0>;
  				remote-endpoint = <&isp0_in>;
  			};
+@@ -149,7 +146,7 @@
+  * when dsi0 is enabled
+  */
+ &dsi0 {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &dsi0_in_vp0 {
+@@ -157,7 +154,7 @@
+ };
+ 
+ &dsi0_in_vp1 {
+-	status = "okay";
++	status = "disabled";
+ };
+ 
+ &dsi0_panel {
 @@ -181,20 +178,21 @@
  };
  
@@ -716,7 +720,7 @@ index dc9ad4236..837dff63f 100644
  &rkisp {
  	status = "okay";
  };
-@@ -413,7 +446,7 @@
+@@ -413,23 +446,23 @@
  
  		isp0_in: endpoint@0 {
  			reg = <0>;
@@ -725,7 +729,11 @@ index dc9ad4236..837dff63f 100644
  		};
  	};
  };
-@@ -424,12 +457,12 @@
+ 
+ &route_dsi0 {
+-	status = "okay";
++	status = "disabled";
+ 	connect = <&vp1_out_dsi0>;
  };
  
  &route_edp {
@@ -923,6 +931,3 @@ index 688203de6..4c2bddb59 100644
 +CONFIG_TOUCHSCREEN_TINKER_FT5406=y
 +CONFIG_TINKER_MCU=y
 +CONFIG_VIDEO_OV5647=y
--- 
-2.17.1
-

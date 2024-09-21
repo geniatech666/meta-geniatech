@@ -1,0 +1,16 @@
+diff --git a/arch/arm/mach-rockchip/board.c b/arch/arm/mach-rockchip/board.c
+index 4a5cf71..3c921d7 100644
+--- a/arch/arm/mach-rockchip/board.c
++++ b/arch/arm/mach-rockchip/board.c
+@@ -436,8 +436,10 @@ static void cmdline_handle(void)
+ 				env_set("reboot_mode", "normal");
+ 			}
+ 		}
+-	}else if (if_type == IF_TYPE_MMC && devnum == 0)
++	}
++	/*else if (if_type == IF_TYPE_MMC && devnum == 0)
+ 		env_set("bootargs","root=PARTUUID=614e0000-0000 rw rootwait");
++	*/
+ 	if (rockchip_get_boot_mode() == BOOT_MODE_QUIESCENT)
+ 		env_update("bootargs", "androidboot.quiescent=1 pwm_bl.quiescent=1");
+ }

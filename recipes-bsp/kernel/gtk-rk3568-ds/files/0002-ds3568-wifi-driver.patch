@@ -1,0 +1,127 @@
+diff --git a/drivers/net/wireless/rockchip_wlan/Kconfig b/drivers/net/wireless/rockchip_wlan/Kconfig
+index 858f0d6e6..9ce4d8ea0 100644
+--- a/drivers/net/wireless/rockchip_wlan/Kconfig
++++ b/drivers/net/wireless/rockchip_wlan/Kconfig
+@@ -41,5 +41,7 @@ source "drivers/net/wireless/rockchip_wlan/infineon/Kconfig"
+ 
+ source "drivers/net/wireless/rockchip_wlan/8897U/wlan_src/Kconfig"
+ source "drivers/net/wireless/rockchip_wlan/8897U/mbtc_src/Kconfig"
++source "drivers/net/wireless/rockchip_wlan/rtl8821cs/Kconfig"
++
+ 
+ endif # WL_ROCKCHIP
+diff --git a/drivers/net/wireless/rockchip_wlan/Makefile b/drivers/net/wireless/rockchip_wlan/Makefile
+index 6439eba8b..428550c9c 100644
+--- a/drivers/net/wireless/rockchip_wlan/Makefile
++++ b/drivers/net/wireless/rockchip_wlan/Makefile
+@@ -4,3 +4,4 @@ obj-$(CONFIG_CYW_BCMDHD)	+= cywdhd/
+ obj-$(CONFIG_INFINEON_DHD)	+= infineon/
+ obj-$(CONFIG_MRVL8897U)        += 8897U/wlan_src/
+ obj-$(CONFIG_MRVL8897U_BT)      += 8897U/mbtc_src/
++obj-$(CONFIG_RTL8821CS) += rtl8821cs/
+diff --git a/drivers/net/wireless/rockchip_wlan/rtl8821cs/Makefile b/drivers/net/wireless/rockchip_wlan/rtl8821cs/Makefile
+index 797d011e6..27e06dfd4 100644
+--- a/drivers/net/wireless/rockchip_wlan/rtl8821cs/Makefile
++++ b/drivers/net/wireless/rockchip_wlan/rtl8821cs/Makefile
+@@ -8,10 +8,10 @@ EXTRA_CFLAGS += -O1
+ #EXTRA_CFLAGS += -pedantic
+ #EXTRA_CFLAGS += -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
+ 
+-EXTRA_CFLAGS += -Wno-unused-variable
++#EXTRA_CFLAGS += -Wno-unused-variable
+ #EXTRA_CFLAGS += -Wno-unused-value
+ #EXTRA_CFLAGS += -Wno-unused-label
+-#EXTRA_CFLAGS += -Wno-unused-parameter
++EXTRA_CFLAGS += -Wno-unused-parameter
+ #EXTRA_CFLAGS += -Wno-unused-function
+ #EXTRA_CFLAGS += -Wno-unused
+ #EXTRA_CFLAGS += -Wno-uninitialized
+@@ -162,7 +162,7 @@ CONFIG_PLATFORM_ARM_TCC8920_JB42 = n
+ CONFIG_PLATFORM_ARM_TCC8930_JB42 = n
+ CONFIG_PLATFORM_ARM_RK2818 = n
+ CONFIG_PLATFORM_ARM_RK3066 = n
+-CONFIG_PLATFORM_ARM_RK3188 = y
++CONFIG_PLATFORM_ARM_RK3188 = n
+ CONFIG_PLATFORM_ARM_URBETTER = n
+ CONFIG_PLATFORM_ARM_TI_PANDA = n
+ CONFIG_PLATFORM_MIPS_JZ4760 = n
+@@ -1709,9 +1709,10 @@ ifeq ($(CONFIG_SDIO_HCI), y)
+ EXTRA_CFLAGS += -DRTW_SUPPORT_PLATFORM_SHUTDOWN
+ endif
+ # default setting for Special function
+-ARCH := arm
+-CROSS_COMPILE := /home/android_sdk/Rockchip/Rk3188/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
+-KSRC := /home/android_sdk/Rockchip/Rk3188/kernel
++#ARCH := arm
++#CROSS_COMPILE := /home/android_sdk/Rockchip/Rk3188/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-
++#KSRC := /home/android_sdk/Rockchip/Rk3188/kernel
++
+ MODULE_NAME := 8821cs
+ endif
+ 
+@@ -2279,7 +2280,9 @@ endif
+ 
+ ARCH ?= arm64
+ CROSS_COMPILE ?=
+-KSRC ?=
++
++#CROSS_COMPILE =/home/fq/code/rk356x_yocto/meta-rockchip/external/prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
++#KSRC =/home/fq/code/rk356x_yocto/meta-rockchip/external/kernel
+ 
+ ifeq ($(CONFIG_RTL8822B), y)
+ ifeq ($(CONFIG_SDIO_HCI), y)
+@@ -2329,6 +2332,10 @@ ifneq ($(USER_MODULE_NAME),)
+ MODULE_NAME := $(USER_MODULE_NAME)
+ endif
+ 
++ARCH = arm64
++CROSS_COMPILE =/home/fq/code/rk356x_yocto/meta-rockchip/external/prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
++KSRC =/home/fq/code/rk356x_yocto/meta-rockchip/external/kernel
++
+ ifneq ($(KERNELRELEASE),)
+ 
+ ########### this part for *.mk ############################
+@@ -2440,8 +2447,42 @@ ifeq ($(CONFIG_RTL8723B), y)
+ $(MODULE_NAME)-$(CONFIG_MP_INCLUDED)+= core/rtw_bt_mp.o
+ endif
+ 
+-obj-$(CONFIG_RTL8821CS) := $(MODULE_NAME).o
++#ifeq ($(CONFIG_RTL8821C),m)
++#	EXTRA_LDFLAGS += --strip-debug
++#endif
++
++BCMDHD_ROOT = $(src)
++#$(warning "BCMDHD_ROOT=$(BCMDHD_ROOT)")
++EXTRA_CFLAGS = $(DHDCFLAGS)
++EXTRA_CFLAGS += -DDHD_COMPILED=\"$(BCMDHD_ROOT)\"
++EXTRA_CFLAGS += -I$(srctree)/$(BCMDHD_ROOT)/include/ -I$(srctree)/$(BCMDHD_ROOT)/
++EXTRA_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
++#EXTRA_CFLAGS += $(call cc-disable-warning)
+ 
++
++obj-$(CONFIG_RTL8821C) := $(MODULE_NAME).o
++#obj-m := $(MODULE_NAME).o
++
++ccflags-y := $(EXTRA_CFLAGS)
++
++all: modules
++
++modules:
++	$(MAKE) ARCH=$(ARCH) CROSS_COMPILE=$(CROSS_COMPILE) -C $(KSRC) M=$(PWD)  modules
++#clean:
++	#$(MAKE) -C $(KSRC) M=$(shell pwd) clean
++#	cd hal ; rm -fr */*/*/*.mod.c */*/*/*.mod */*/*/*.o */*/*/.*.cmd */*/*/*.ko
++#	cd hal ; rm -fr */*/*.mod.c */*/*.mod */*/*.o */*/.*.cmd */*/*.ko
++#	cd hal ; rm -fr */*.mod.c */*.mod */*.o */.*.cmd */*.ko
++#	cd hal ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko
++#	cd core ; rm -fr */*.mod.c */*.mod */*.o */.*.cmd */*.ko
++#	cd core ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko
++#	cd os_dep/linux ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko
++#	cd os_dep ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko
++#	cd platform ; rm -fr *.mod.c *.mod *.o .*.cmd *.ko
++#	rm -fr Module.symvers ; rm -fr Module.markers ; rm -fr modules.order
++#	rm -fr *.mod.c *.mod *.o .*.cmd *.ko *~
++#	rm -fr .tmp_versions
+ else
+ 
+ export CONFIG_RTL8821CS = m

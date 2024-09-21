@@ -29,7 +29,7 @@ do_compile () {
 do_install () {
     install -d ${D}${bindir}/
     install -m 0755 ${S}/rk_wifi_init ${D}${bindir}/
-    install -m 0755 ${S}/brcm_patchram_plus1 ${D}${bindir}/
+    #install -m 0755 ${S}/brcm_patchram_plus1 ${D}${bindir}/
     
     mkdir -p ${D}${sysconfdir}/firmware/mrvl/
     install -d ${D}${sysconfdir}/firmware/mrvl/

@@ -68,6 +68,10 @@ CORE_IMAGE_EXTRA_INSTALL += "\
     ntfs-3g \
     ntfsprogs \
     libntfs-3g \
-    route \
     usb8897 \
+   xserver-xorg \
+   drm-cursor \
+   libdrm \
+   autoload \
+   resize-helper \
 "

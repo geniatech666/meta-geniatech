@@ -68,5 +68,10 @@ CORE_IMAGE_EXTRA_INSTALL += "\
     ntfs-3g \
     ntfsprogs \
     libntfs-3g \
-    route \
+    xserver-xorg \
+    drm-cursor \
+    libdrm \
+   autoload \
+   resize-helper \
+   rtl8821cs \
 "

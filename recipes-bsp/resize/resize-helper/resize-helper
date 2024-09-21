@@ -56,9 +56,9 @@ DEVICE="/dev/${DEVICE}"
 #if [ "$PART_TABLE_TYPE" = "dos" ]; then
      FIRST_SECTOR=$(fdisk -l |grep ${ROOT_DEVICE} | awk -F' ' '{print $2}') 
    ##FIRST_SECTOR=$(fdisk -l |grep "/dev/mmcblk3p3" | awk -F' ' '{print $2}')
-   cp /etc/autopart-ori /etc/autopart
-   ${SED} -i "s/FIRST_SECTOR/${FIRST_SECTOR}/g" /etc/autopart
-   ${FDISK} -u ${DEVICE} < /etc/autopart
+   #cp /etc/autopart-ori /etc/autopart
+   #${SED} -i "s/FIRST_SECTOR/${FIRST_SECTOR}/g" /etc/autopart
+   #${FDISK} -u ${DEVICE} < /etc/autopart
 #fi
 
 ${RESIZE2FS} "${ROOT_DEVICE}"
