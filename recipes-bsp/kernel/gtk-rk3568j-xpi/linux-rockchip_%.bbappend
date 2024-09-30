@@ -4,11 +4,16 @@
 # Some opengl[es] libraries are multithreaded.
 PATCHPATH:append = "${CURDIR}/${MACHINE}/files"
 K_P:="${TOPDIR}/../meta-geniatech/recipes-bsp/kernel/${MACHINE}/files/"
-
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI = " \
         git://${TOPDIR}/../meta-rockchip/external/kernel;protocol=file;usehead=1 \
         file://cgroups.cfg \
 	file://${K_P}/0001-kernel-dts-patch.patch \
-        file://${K_P}/logo.bmp \
-	file://${K_P}/logo_kernel.bmp \
+        file://logo.bmp \
+	file://logo_kernel.bmp \
 "
+
+do_compile:prepend() {
+        cp ${B}/../logo.bmp ${S}/
+        cp ${B}/../logo_kernel.bmp ${S}/
+}

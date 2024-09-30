@@ -1,0 +1,13 @@
+diff --git a/arch/arm/mach-rockchip/board.c b/arch/arm/mach-rockchip/board.c
+index 4a5cf71..df1337f 100644
+--- a/arch/arm/mach-rockchip/board.c
++++ b/arch/arm/mach-rockchip/board.c
+@@ -432,7 +432,7 @@ static void cmdline_handle(void)
+ 		} else {
+ 			if (if_type == IF_TYPE_USB)
+ 			{
+-				env_set("bootargs", "root=/dev/sda6 rw rootwait");
++				env_set("bootargs", "root=/dev/sda3 rw rootwait");
+ 				env_set("reboot_mode", "normal");
+ 			}
+ 		}

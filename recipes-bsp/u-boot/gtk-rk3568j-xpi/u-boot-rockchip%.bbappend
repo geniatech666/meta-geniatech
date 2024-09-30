@@ -9,4 +9,5 @@ SRC_URI = " \
         git://${TOPDIR}/../meta-rockchip/external/u-boot;protocol=file;usehead=1; \
         git://${TOPDIR}/../meta-rockchip/external/rkbin;branch=geniatech;protocol=file;usehead=1;name=rkbin;destsuffix=rkbin; \
 	file://${U_P}/0001-u-boot-config.patch \
+	file://${U_P}/0002-uboot-sd-boot.patch \
 "

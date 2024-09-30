@@ -1,4 +1,4 @@
-ppp_on=$(/sbin/ifconfig | /bin/grep -c ppp0)
+eth1=$(ifconfig -a | /bin/grep -c eth1)
 
 crontab /etc/crontab
 sda6=`lsblk |grep sda6`
@@ -15,8 +15,9 @@ fi
 export DISPLAY=:0
 su -c "xrandr --output HDMI-1 --mode 1920x1080"
 
-if [ $ppp_on -eq 1 ];then 
+if [ $eth1 -eq 1 ];then 
 	ifconfig eth1 up
-	udhcpc -i eth1
+	#udhcpc -i eth1
 fi
-
+sleep 4
+hciconfig hci0 up &

@@ -14,6 +14,13 @@ SRC_URI = " \
           file://rtl8821cs-startup \
 	  file://rtl8821c_config \
 	  file://rtl8821c_fw \
+	  file://hciattach.c \  
+	  file://hciattach.h \
+	  file://hciattach_h4.c \
+	  file://hciattach_h4.h \
+	  file://hciattach_rtk.c \
+	  file://rtb_fwc.c \
+	  file://rtb_fwc.h \ 
           "
 
 S = "${WORKDIR}"
@@ -25,13 +32,14 @@ do_compile () {
 do_install () {
     install -d ${D}${bindir}/
     install -m 0755 ${S}/rk_wifi_init ${D}${bindir}/
+    install -m 0755 ${S}/rtk_hciattach ${D}${bindir}/
 
 
     mkdir -p ${D}${sysconfdir}/firmware/rtlbt/
     install -d ${D}${sysconfdir}/firmware/rtlbt/
-    install -m 0755 ${WORKDIR}/rtl8821c_config ${D}${sysconfdir}/firmware
-    install -m 0755 ${WORKDIR}/rtl8821c_fw ${D}${sysconfdir}/firmware
-
+    install -m 0755 ${WORKDIR}/rtl8821c_config ${D}${sysconfdir}/firmware/rtlbt
+    install -m 0755 ${WORKDIR}/rtl8821c_fw ${D}${sysconfdir}/firmware/rtlbt
+    
     install -d ${D}${sysconfdir}/init.d
     install -d ${D}${sysconfdir}/rc2.d
     install -d ${D}${sysconfdir}/rc3.d

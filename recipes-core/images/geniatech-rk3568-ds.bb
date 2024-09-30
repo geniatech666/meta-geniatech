@@ -74,4 +74,11 @@ CORE_IMAGE_EXTRA_INSTALL += "\
    autoload \
    resize-helper \
    rtl8821cs \
+   wvdial \
+  gprs \
+ usbutils \
+  udev-extraconf \
+  glib-networking \
+  dhcpcd \
+   ppp \
 "

@@ -1,12 +1,24 @@
 #!/bin/sh
 
 sleep 3
+bt_type="RTL8821CS"
+uart="/dev/ttyS8"
+
+rtk_attach() {
+	ret=`ps -ef |grep rtk_hciattach |grep -v "grep" |wc -l`
+	if [ ${ret} = 1 ]; then
+		killall rtk_hciattach
+			sleep 1
+	fi
+	#insmod /lib/modules/hci_uart.ko
+	echo 1 > /sys/class/rfkill/rfkill0/state
+	/usr/bin/rtk_hciattach -n -s 115200 ${uart} rtk_h5 &
+	#/usr/bin/rtk_hciattach -n -s 115200 ${uart} rtk_h5 1500000 noflow &
+}
 
 case "$1" in
 start)
-        brcm_patchram_plus1 --bd_addr_rand --enable_hci --no2bytes --use_baudrate_for_download  --tosleep  200000 --baudrate 1500000 --patchram /etc/firmware/BCM4362A2.hcd  /dev/ttymxc0  &
-	sleep 2
-	rfkill unblock all
+	rtk_attach	
 	ifconfig wlan0 up
 	hciconfig hci0 up
         ;;

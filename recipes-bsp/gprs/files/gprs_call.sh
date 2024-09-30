@@ -1,7 +1,7 @@
 mv /etc/3gnet /etc/ppp/peers
 #sleep 5
 #/usr/bin/sscom&
-sleep 5
+sleep 10
 wvdial&
 sleep 10
 echo "nameserver 114.114.114.114" >> /etc/resolv.conf
