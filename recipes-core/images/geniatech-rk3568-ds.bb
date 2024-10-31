@@ -18,6 +18,8 @@ CORE_IMAGE_EXTRA_INSTALL += "\
         gcc \
         v4l-utils \
         ntp \
+	ntpdate \
+	sntp \
 	net-tools \
 	networkmanager \
 	glib-networking \
@@ -81,4 +83,7 @@ CORE_IMAGE_EXTRA_INSTALL += "\
   glib-networking \
   dhcpcd \
    ppp \
+   can-utils \
+   hostapd \
+   shutdown-desktop \
 "

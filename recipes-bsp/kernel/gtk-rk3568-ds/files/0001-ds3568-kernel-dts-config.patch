@@ -1,5 +1,5 @@
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-evb.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-evb.dtsi
-index f13c2387f..e2987e690 100644
+index f13c2387f..1b98d6f76 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-evb.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-evb.dtsi
 @@ -64,6 +64,7 @@
@@ -148,7 +148,15 @@ index f13c2387f..e2987e690 100644
  		pinctrl-names = "default";
  		pinctrl-0 = <&vcc5v0_host_en>;
  	};
-@@ -320,6 +375,7 @@
+@@ -303,6 +358,7 @@
+ 		regulator-max-microvolt = <5000000>;
+ 		enable-active-high;
+ 		gpio = <&gpio0 RK_PA5 GPIO_ACTIVE_HIGH>;
++		regulator-always-on;
+ 		vin-supply = <&vcc5v0_usb>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vcc5v0_otg_en>;
+@@ -320,6 +376,7 @@
  	vcc3v3_lcd1_n: vcc3v3-lcd1-n {
  		compatible = "regulator-fixed";
  		regulator-name = "vcc3v3_lcd1_n";
@@ -156,7 +164,7 @@ index f13c2387f..e2987e690 100644
  		regulator-boot-on;
  		regulator-state-mem {
  			regulator-off-in-suspend;
-@@ -347,7 +403,6 @@
+@@ -347,7 +404,6 @@
  		compatible = "wlan-platdata";
  		rockchip,grf = <&grf>;
  		wifi_chip_type = "ap6398s";
@@ -164,7 +172,7 @@ index f13c2387f..e2987e690 100644
  		status = "okay";
  	};
  
-@@ -369,14 +424,87 @@
+@@ -369,12 +425,85 @@
  	test-power {
  		status = "okay";
  	};
@@ -205,10 +213,13 @@ index f13c2387f..e2987e690 100644
 +                };
 +
 +	};
-+};
-+
+ };
+ 
+-&bus_npu {
+-	bus-supply = <&vdd_logic>;
+-	pvtm-supply = <&vdd_cpu>;
 +&edp{
-+	status = "okay";
+ 	status = "okay";
 +	force-hpd;
 +	ports {
 +                #address-cells = <1>;
@@ -223,11 +234,8 @@ index f13c2387f..e2987e690 100644
 +		};
 +        };
 +
- };
- 
--&bus_npu {
--	bus-supply = <&vdd_logic>;
--	pvtm-supply = <&vdd_cpu>;
++};
++
 +&can0 {
 +	assigned-clocks = <&cru CLK_CAN0>;
 +	assigned-clock-rates = <150000000>;
@@ -241,21 +249,19 @@ index f13c2387f..e2987e690 100644
 +	assigned-clock-rates = <150000000>;
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&can1m1_pins>;
- 	status = "okay";
- };
- 
++	status = "okay";
++};
++
 +&can2 {
 +	assigned-clocks = <&cru CLK_CAN2>;
 +	assigned-clock-rates = <150000000>;
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&can2m1_pins>;
 +	status = "disabled";
-+};
-+
- &cpu0 {
- 	cpu-supply = <&vdd_cpu>;
  };
-@@ -391,7 +519,7 @@
+ 
+ &cpu0 {
+@@ -391,7 +520,7 @@
  };
  
  &dsi0 {
@@ -264,7 +270,7 @@ index f13c2387f..e2987e690 100644
  	//rockchip,lane-rate = <1000>;
  	dsi0_panel: panel@0 {
  		status = "okay";
-@@ -403,8 +531,6 @@
+@@ -403,8 +532,6 @@
  		prepare-delay-ms = <60>;
  		unprepare-delay-ms = <60>;
  		disable-delay-ms = <60>;
@@ -273,7 +279,7 @@ index f13c2387f..e2987e690 100644
  		dsi,flags = <(MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
  			MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET)>;
  		dsi,format = <MIPI_DSI_FMT_RGB888>;
-@@ -679,22 +805,52 @@
+@@ -679,22 +806,52 @@
  		];
  
  		disp_timings0: display-timings {
@@ -337,7 +343,7 @@ index f13c2387f..e2987e690 100644
  		};
  
  		ports {
-@@ -728,7 +884,7 @@
+@@ -728,7 +885,7 @@
  	status = "disabled";
  	//rockchip,lane-rate = <1000>;
  	dsi1_panel: panel@0 {
@@ -346,7 +352,7 @@ index f13c2387f..e2987e690 100644
  		compatible = "simple-panel-dsi";
  		reg = <0>;
  		backlight = <&backlight1>;
-@@ -1127,8 +1283,6 @@
+@@ -1127,8 +1284,6 @@
  		//fb-inner-reg-idxs = <2>;
  		/* 1: rst regs (default in codes), 0: rst the pmic */
  		pmic-reset-func = <0>;
@@ -355,7 +361,7 @@ index f13c2387f..e2987e690 100644
  
  		vcc1-supply = <&vcc3v3_sys>;
  		vcc2-supply = <&vcc3v3_sys>;
-@@ -1368,33 +1522,93 @@
+@@ -1368,33 +1523,93 @@
  			spk-volume = <3>;
  			mic-in-differential;
  			status = "okay";
@@ -454,7 +460,7 @@ index f13c2387f..e2987e690 100644
  		irq_enable = <0>;
  		poll_delay_ms = <30>;
  		type = <SENSOR_TYPE_ACCEL>;
-@@ -1407,6 +1621,10 @@
+@@ -1407,6 +1622,10 @@
  	status = "okay";
  };
  
@@ -465,7 +471,7 @@ index f13c2387f..e2987e690 100644
  &i2s1_8ch {
  	status = "okay";
  	rockchip,clk-trcm = <1>;
-@@ -1417,10 +1635,11 @@
+@@ -1417,10 +1636,11 @@
  		     &i2s1m0_sdo0>;
  };
  
@@ -479,7 +485,7 @@ index f13c2387f..e2987e690 100644
  };
  
  &iep {
-@@ -1459,17 +1678,11 @@
+@@ -1459,17 +1679,11 @@
  
  &pinctrl {
  
@@ -499,7 +505,7 @@ index f13c2387f..e2987e690 100644
  
  	pmic {
  		pmic_int: pmic_int {
-@@ -1496,8 +1709,7 @@
+@@ -1496,8 +1710,7 @@
  	touch {
  		touch_gpio: touch-gpio {
  			rockchip,pins =
@@ -509,7 +515,7 @@ index f13c2387f..e2987e690 100644
  		};
  	};
  
-@@ -1522,32 +1734,34 @@
+@@ -1522,32 +1735,34 @@
  			rockchip,pins = <2 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
  		};
  	};
@@ -562,7 +568,7 @@ index f13c2387f..e2987e690 100644
  	vccio7-supply = <&vcc_3v3>;
  };
  
-@@ -1662,6 +1876,62 @@
+@@ -1662,6 +1877,62 @@
  			<0xb6	KEY_0>,
  			<0xb5	KEY_BACKSPACE>;
  	};
@@ -625,7 +631,7 @@ index f13c2387f..e2987e690 100644
  };
  
  &rk_rga {
-@@ -1686,6 +1956,7 @@
+@@ -1686,6 +1957,7 @@
  };
  
  &rknpu {
@@ -633,7 +639,7 @@ index f13c2387f..e2987e690 100644
  	rknpu-supply = <&vdd_npu>;
  	status = "okay";
  };
-@@ -1708,7 +1979,9 @@
+@@ -1708,7 +1980,9 @@
  	bus-width = <8>;
  	no-sdio;
  	no-sd;
@@ -643,7 +649,7 @@ index f13c2387f..e2987e690 100644
  	max-frequency = <200000000>;
  	full-pwr-cycle-in-suspend;
  	status = "okay";
-@@ -1718,6 +1991,7 @@
+@@ -1718,6 +1992,7 @@
  	max-frequency = <150000000>;
  	no-sdio;
  	no-mmc;
@@ -651,8 +657,17 @@ index f13c2387f..e2987e690 100644
  	bus-width = <4>;
  	cap-mmc-highspeed;
  	cap-sd-highspeed;
+@@ -1795,7 +2070,7 @@
+ };
+ 
+ &usbdrd_dwc3 {
+-	dr_mode = "otg";
++	dr_mode = "host";
+ 	extcon = <&usb2phy0>;
+ 	status = "okay";
+ };
 diff --git a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
-index dc9ad4236..d1af348a2 100644
+index dc9ad4236..f2e02c372 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
 +++ b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
 @@ -15,6 +15,13 @@
@@ -1092,7 +1107,7 @@ index dc9ad4236..d1af348a2 100644
 +
 +&usbdrd_dwc3 {
 +	status = "okay";
-+	dr_mode = "host";
++	dr_mode = "otg";
 +};
 +
 +&uart6 {

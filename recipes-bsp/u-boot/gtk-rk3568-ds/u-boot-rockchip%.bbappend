@@ -5,6 +5,9 @@
 PATCHPATH:append = "${CURDIR}/${MACHINE}"
 U_P:="${TOPDIR}/../meta-geniatech/recipes-bsp/u-boot/${MACHINE}/files/"
 
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+RK_MISC_IMG="wipe_all-misc.img"
+
 SRC_URI = " \
         git://${TOPDIR}/../meta-rockchip/external/u-boot;protocol=file;usehead=1; \
         git://${TOPDIR}/../meta-rockchip/external/rkbin;branch=geniatech;protocol=file;usehead=1;name=rkbin;destsuffix=rkbin; \

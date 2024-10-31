@@ -1,0 +1,46 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+index 778752440..e3301ca8b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+@@ -389,22 +389,25 @@
+ 
+ 	rockchip_suspend: rockchip-suspend {
+ 		compatible = "rockchip,pm-rk3568";
+-		status = "disabled";
++		status = "okay";
+ 		rockchip,sleep-debug-en = <1>;
+ 		rockchip,sleep-mode-config = <
+ 			(0
+-			| RKPM_SLP_ARMOFF_LOGOFF
++			//| RKPM_SLP_ARMOFF_LOGOFF
+ 			| RKPM_SLP_CENTER_OFF
+ 			| RKPM_SLP_HW_PLLS_OFF
+ 			| RKPM_SLP_PMUALIVE_32K
+-			| RKPM_SLP_OSC_DIS
+-			| RKPM_SLP_PMIC_LP
++			//| RKPM_SLP_OSC_DIS
++			//| RKPM_SLP_PMIC_LP
+ 			| RKPM_SLP_32K_PVTM
+ 			)
+ 		>;
+ 		rockchip,wakeup-config = <
+ 			(0
+ 			| RKPM_GPIO_WKUP_EN
++			| RKPM_PWM0_WKUP_EN
++			| RKPM_USB_WKUP_EN
++			| RKPM_USB_LINESTATE_WKUP_EN
+ 			)
+ 		>;
+ 	};
+diff --git a/arch/arm64/configs/rockchip_linux_defconfig b/arch/arm64/configs/rockchip_linux_defconfig
+index 688203de6..7833d70fe 100644
+--- a/arch/arm64/configs/rockchip_linux_defconfig
++++ b/arch/arm64/configs/rockchip_linux_defconfig
+@@ -434,6 +434,7 @@ CONFIG_UHID=y
+ CONFIG_HID_KENSINGTON=y
+ CONFIG_HID_MULTITOUCH=y
+ CONFIG_USB_HIDDEV=y
++CONFIG_HID_PID=y
+ CONFIG_I2C_HID=y
+ CONFIG_USB_ANNOUNCE_NEW_DEVICES=y
+ # CONFIG_USB_DEFAULT_PERSIST is not set
