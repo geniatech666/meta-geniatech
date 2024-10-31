@@ -18,6 +18,8 @@ CORE_IMAGE_EXTRA_INSTALL += "\
         gcc \
         v4l-utils \
         ntp \
+	sntp \
+	ntpdate \
 	net-tools \
 	networkmanager \
 	glib-networking \
@@ -72,6 +74,11 @@ CORE_IMAGE_EXTRA_INSTALL += "\
    xserver-xorg \
    drm-cursor \
    libdrm \
-   autoload \
+   autorun \
    resize-helper \
+ usbutils \
+  udev-extraconf \
+  glib-networking \
+  resolvconf \
+  dhcpcd \
 "

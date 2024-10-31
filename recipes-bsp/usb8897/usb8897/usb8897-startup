@@ -7,6 +7,7 @@ start)
         rmmod -f mbt8xxx
 	rmmod -f usb8xxx
 	rmmod -f mlan
+	cp -rf /etc/firmware/mrvl/ /lib/firmware/
 	sleep 2
         insmod  /lib/modules/5.10.198/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlan.ko
         sleep 1

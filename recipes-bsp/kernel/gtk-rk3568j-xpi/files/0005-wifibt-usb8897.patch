@@ -1,0 +1,50 @@
+diff --git a/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_main.c b/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_main.c
+index 208a86a88..61a02a611 100644
+--- a/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_main.c
++++ b/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_main.c
+@@ -6357,8 +6357,8 @@ woal_save_hex_dump(int rowsize, const void *buf, size_t len,
+ }
+ 
+ #define HostCmd_CMD_CFG_DATA                  0x008f
+-#define DEF_FW_PATH  "/lib/firmware/"
+-#define DEF_HOSTCMD_PATH "/lib/firmware/mrvl/hostcmd.conf"
++#define DEF_FW_PATH  "/etc/firmware/"
++#define DEF_HOSTCMD_PATH "/etc/firmware/mrvl/hostcmd.conf"
+ /**
+  *  @brief This function save the hostcmd response to file
+  *
+diff --git a/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_usb.h b/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_usb.h
+index b43873af3..cbc96861a 100644
+--- a/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_usb.h
++++ b/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlinux/moal_usb.h
+@@ -48,7 +48,7 @@ Change Log:
+ #ifdef STA_SUPPORT
+ /** Default firmaware name */
+ 
+-#define DEFAULT_FW_NAME	"mrvl/usb8897_combo.bin"
++#define DEFAULT_FW_NAME	"/etc/firmware/mrvl/usb8897_combo.bin"
+ 
+ #ifndef DEFAULT_FW_NAME
+ #define DEFAULT_FW_NAME ""
+@@ -58,8 +58,8 @@ Change Log:
+ #ifdef UAP_SUPPORT
+ /** Default firmaware name */
+ 
+-#define DEFAULT_AP_FW_NAME "mrvl/usb8897_combo.bin"
+-#define DEFAULT_WLAN_FW_NAME "mrvl/usb8897_wlan.bin"
++#define DEFAULT_AP_FW_NAME "/etc/firmware/mrvl/usb8897_combo.bin"
++#define DEFAULT_WLAN_FW_NAME "/etc/firmware/mrvl/usb8897_wlan.bin"
+ 
+ #ifndef DEFAULT_AP_FW_NAME
+ #define DEFAULT_AP_FW_NAME ""
+@@ -68,8 +68,8 @@ Change Log:
+ 
+ /** Default firmaware name */
+ 
+-#define DEFAULT_AP_STA_FW_NAME "mrvl/usb8897_uapsta.bin"
+-#define DEFAULT_WLAN_FW_NAME "mrvl/usb8897_wlan.bin"
++#define DEFAULT_AP_STA_FW_NAME "/etc/firmware/mrvl/usb8897_uapsta.bin"
++#define DEFAULT_WLAN_FW_NAME "/etc/firmware/mrvl/usb8897_wlan.bin"
+ 
+ #ifndef DEFAULT_AP_STA_FW_NAME
+ #define DEFAULT_AP_STA_FW_NAME ""

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:autoload
+# Required-Start: $network $remote_fs $local_fs
+# Required-Stop: $network $remote_fs $local_fs
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: none
+# Description:none
+### END INIT INFO
+
+case "$1" in
+start)
+        sh /etc/autorun.sh &
+        ;;
+stop)
+        #start-stop-daemon --stop
+        ;;
+esac
+exit 0
