@@ -1,0 +1,53 @@
+diff --git a/common/image-fit.c b/common/image-fit.c
+index 0ee9eab..b629d88 100644
+--- a/common/image-fit.c
++++ b/common/image-fit.c
+@@ -35,6 +35,8 @@ DECLARE_GLOBAL_DATA_PTR;
+ #define __round_mask(x, y) ((__typeof__(x))((y)-1))
+ #define round_up(x, y) ((((x)-1) | __round_mask(x, y))+1)
+ 
++ulong device_tree;
++
+ /*****************************************************************************/
+ /* New uImage format routines */
+ /*****************************************************************************/
+@@ -407,8 +409,11 @@ void fit_image_print(const void *fit, int image_noffset, const char *p)
+ 		void *vdata = (void *)data;
+ 
+ 		printf("0x%08lx\n", (ulong)map_to_sysmem(vdata));
++		device_tree = (ulong)map_to_sysmem(vdata);
+ 	}
+ #endif
++	printf("device tree:0x%08lx\n", device_tree);
++
+ 
+ 	printf("%s  Data Size:    ", p);
+ 	if (ret)
+@@ -2262,7 +2267,7 @@ int fit_image_load_index(bootm_headers_t *images, ulong addr,
+ 		}
+ 
+ 		printf("   Loading %s from 0x%08lx to 0x%08lx\n",
+-		       prop_name, data, load);
++				prop_name, data, load);
+ 
+ 		dst = map_sysmem(load, len);
+ 		memmove(dst, buf, len);
+@@ -2270,6 +2275,10 @@ int fit_image_load_index(bootm_headers_t *images, ulong addr,
+ 	}
+ 	bootstage_mark(bootstage_id + BOOTSTAGE_SUB_LOAD);
+ 
++	if(!strcmp(prop_name, "fdt"))
++		data=device_tree;
++	printf("Loading %s from 0x%08lx to 0x%08lx\n",prop_name, data, load);
++
+ 	*datap = data;
+ 	*lenp = len;
+ 	if (fit_unamep)
+@@ -2277,7 +2286,6 @@ int fit_image_load_index(bootm_headers_t *images, ulong addr,
+ 	if (fit_uname_configp)
+ 		*fit_uname_configp = (char *)(fit_uname_config ? :
+ 					      fit_base_uname_config);
+-
+ 	return noffset;
+ }
+ 
