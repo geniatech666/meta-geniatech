@@ -9,9 +9,9 @@ start)
 	rmmod -f mlan
 	cp -rf /etc/firmware/mrvl/ /lib/firmware/
 	sleep 2
-        insmod  /lib/modules/5.10.198/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlan.ko
+        insmod /lib/modules/5.10.198-rockchip-standard/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/mlan.ko
         sleep 1
-        insmod  /lib/modules/5.10.198/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/usb8xxx.ko drv_mode=1  cfg80211_drcs=0 auto_ds=2 ps_mode=2 cfg80211_wext=0xf
+        insmod /lib/modules/5.10.198-rockchip-standard/kernel/drivers/net/wireless/rockchip_wlan/8897U/wlan_src/usb8xxx.ko drv_mode=1  cfg80211_drcs=0 auto_ds=2 ps_mode=2 cfg80211_wext=0xf
         sleep 2
         ifconfig mlan0 up
         sleep 2

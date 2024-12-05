@@ -13,7 +13,7 @@ else
 fi
 
 export DISPLAY=:0
-su -c "xrandr --output DSI-1 --primary --mode 1280x800"
+su -c "xrandr --output DSI-1 --primary --mode 1024x600"
 su -c "xrandr --output HDMI-1 --mode 1920x1080"
 
 
