@@ -70,8 +70,8 @@ CORE_IMAGE_EXTRA_INSTALL += "\
     ntfs-3g \
     ntfsprogs \
     libntfs-3g \
-    usb8897 \
-   xserver-xorg \
+   rtl8723bu \
+	xserver-xorg \
    drm-cursor \
    libdrm \
    autorun \

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+sleep 3
+bt_type="RTL8723BU"
+uart="/dev/ttyS8"
+
+rtk_attach() {
+	ret=`ps -ef |grep rtk_hciattach |grep -v "grep" |wc -l`
+	if [ ${ret} = 1 ]; then
+		killall rtk_hciattach
+			sleep 1
+	fi
+	#insmod /lib/modules/hci_uart.ko
+	echo 1 > /sys/class/rfkill/rfkill0/state
+	/usr/bin/rtk_hciattach -n -s 115200 ${uart} rtk_h5 &
+	#/usr/bin/rtk_hciattach -n -s 115200 ${uart} rtk_h5 1500000 noflow &
+}
+
+case "$1" in
+start)
+	#rtk_attach	
+	cp -rf /etc/firmware/rtl_bt/* /lib/firmware/
+	ifconfig wlan0 up
+	hciconfig hci0 down
+	hciconfig hci0 up
+        ;;
+stop)
+        ;;
+esac
+exit 0
