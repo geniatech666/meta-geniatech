@@ -1,0 +1,61 @@
+From 2f4322713029f0226381f930026ff39ca06bbabb Mon Sep 17 00:00:00 2001
+From: "fu.qiang" <fu.qiang@geniatech.com>
+Date: Mon, 24 Mar 2025 10:38:08 +0800
+Subject: [PATCH] xpi3568-modify-40-head-spi2-3-i2c2-5
+
+---
+ .../dts/rockchip/rk3568-evb1-ddr4-v10.dtsi    | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
+index 837dff63f..83c90ff58 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
+@@ -370,6 +370,44 @@
+ 	
+ };
+ 
++&i2c5{
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c5m0_xfer>;
++};
++
++&i2c2{
++        status = "okay";
++        pinctrl-names = "default";
++        pinctrl-0 = <&i2c2m1_xfer>;
++};
++
++&spi2 {
++        status = "okay";
++        max-freq = <48000000>; /* spi internal clk, don't modify */
++        pinctrl-names = "default";
++        pinctrl-0 = <&spi2m1_cs0 &spi2m1_cs1 &spi2m1_pins>;
++        spi_dev@0 {
++                 compatible = "rockchip,spidev";
++                 reg = <0>;
++                 spi-max-frequency = <12000000>;
++                 spi-lsb-first;
++         };
++};
++
++&spi3 {
++        status = "okay";
++	max-freq = <48000000>; /* spi internal clk, don't modify */
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi3m0_cs0 &spi3m0_cs1 &spi3m0_pins>;
++	spi_dev@0 {
++                 compatible = "rockchip,spidev";
++                 reg = <0>;
++                 spi-max-frequency = <12000000>;
++                 spi-lsb-first;
++         };
++};
++
+ &mdio0 {
+ 	rgmii_phy0: phy@0 {
+ 		compatible = "ethernet-phy-ieee802.3-c22";
+-- 
+2.17.1
+
