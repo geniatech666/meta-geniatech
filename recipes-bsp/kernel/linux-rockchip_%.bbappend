@@ -14,8 +14,9 @@ SRC_URI = " \
 
 SRC_URI:append = " ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://${K_P}/0001-kernel-dts-patch.patch','', d)} \
                    ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://${K_P}/0006-xpi3568j-add-wifi-bt-rtl8723bu-driver.patch','', d)} \
-                   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://${K_P}/0001-xpi3568-modify-40-head-spi2-3-i2c2-5.patch','', d)} \
-                   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://logo_kernel.bmp','', d)} \
+		   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://${K_P}/0001-xpi3568-modify-40-head-spi2-3-i2c2-5.patch','', d)} \
+		   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://${K_P}/0004-xpi3568-close-40pin-i2c2-for-dsi-panel.patch','', d)} \
+		   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://logo_kernel.bmp','', d)} \
 		   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://logo.bmp','', d)} \
 		   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://mkimage','', d)} \
 		   ${@bb.utils.contains('MACHINE', 'gtk-rk3568j-xpi','file://rk356x.its','', d)} \

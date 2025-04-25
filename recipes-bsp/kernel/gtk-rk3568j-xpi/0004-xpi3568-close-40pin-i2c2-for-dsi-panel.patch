@@ -1,0 +1,29 @@
+From 8247402599429ddda82e046639d4bfefd575888e Mon Sep 17 00:00:00 2001
+From: "fu.qiang" <fu.qiang@geniatech.com>
+Date: Thu, 24 Apr 2025 17:43:33 +0800
+Subject: [PATCH] xpi3568 close 40pin i2c2 for dsi panel
+
+---
+ arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
+index 83c90ff58..715c75846 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
+@@ -376,12 +376,6 @@
+ 	pinctrl-0 = <&i2c5m0_xfer>;
+ };
+ 
+-&i2c2{
+-        status = "okay";
+-        pinctrl-names = "default";
+-        pinctrl-0 = <&i2c2m1_xfer>;
+-};
+-
+ &spi2 {
+         status = "okay";
+         max-freq = <48000000>; /* spi internal clk, don't modify */
+-- 
+2.17.1
+
